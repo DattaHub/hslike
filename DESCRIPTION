@@ -1,0 +1,19 @@
+Package: hslike
+Type: Package
+Title: Estimations using the Horseshoe-like prior.
+Version: 0.0.1
+Date: 2016-02-19
+Authors@R: c(
+    person("Datta", "Jyotishka", email = "", role = "cre"),
+    person("Willard", "Brandon T.", email = "brandonwillard@gmail.com", role = "aut"))
+Description: Estimations using the Horseshoe-like prior.
+License: TBD
+URL: https://github.com/DattaHub/hslike
+Depends:
+    R (>= 3.0.2),
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: knitr
+RoxygenNote: 6.0.1

@@ -1,8 +1,11 @@
-library(ggplot2)
-library(plyr)
-library(dplyr)
-library(reshape2)
-
+#'
+#'  Slice sampler for the Normal observations model with HS-like prior.
+#'  TODO: More detail on priors.
+#'
+#'  @param Y observations
+#'  @return A list of samples
+#'  @export
+#'
 eval_hslike <- function(Y, nmc=100, burn=100, 
                         eff_zero=1e-5, verbose=TRUE) {
   n <- length(Y)
