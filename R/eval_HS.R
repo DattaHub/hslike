@@ -1,3 +1,11 @@
+#'
+#'  Slice sampler for the Normal observations model with HS-like prior.
+#'  TODO: More detail on priors.
+#'
+#'  @param Y observations
+#'  @return A list of samples
+#'  @export
+#'
 eval_HS <- function(Y)
 {
   TauTrue <- 0.1
