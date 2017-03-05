@@ -33,7 +33,7 @@ eval_hslike <- function(Y, nmc=100, burn=100,
     # m = Y / (1 + b)
     # Beta = rnorm(n, m, s)
     # Theta_new = Beta * Lambda
-    lam_tau_weight = 1. / (1 + 2 * lam_div_tau^2)
+    lam_tau_weight = 1. / (1 + lam_div_tau^2)
     Theta_new = rnorm(n, lam_tau_weight * Y, 
                       sqrt(lam_tau_weight * Sigma2)) 
     
@@ -56,7 +56,7 @@ eval_hslike <- function(Y, nmc=100, burn=100,
     u = runif(1, 0, 1/(eta + 1))
     ub = (1 - u) / u
     a = (n + 1)/ 2
-    b = crossprod(Lambda * Theta)
+    b = 0.5*crossprod(Lambda * Theta)
     ub2 = pgamma(ub, a, rate=b)
     u2 = runif(1, 0, ub2)
     eta = qgamma(u2, a, rate=b)
@@ -72,7 +72,7 @@ eval_hslike <- function(Y, nmc=100, burn=100,
     
     # Now update Lambda, comment out for global shrinkage only
     beta_div_tau = Theta / Tau
-    Lambda2_new = rexp(n, rate=beta_div_tau^2 + Nu/2)
+    Lambda2_new = rgamma(n, shape = 3/2, rate=0.5*beta_div_tau^2 + Nu/2)
     
     # XXX: A hack to avoid 0/0 in Lambda / Tau.
     Lambda2_new = ifelse(Lambda2_new < eff_zero, eff_zero, Lambda2_new)
@@ -87,7 +87,10 @@ eval_hslike <- function(Y, nmc=100, burn=100,
     
     # Now Update Nu
     # Nu = rgamma(n, shape=3/2, rate=Lambda2/2) 
-    Nu = rexp(n, rate=Lambda2)
+    #Nu = rexp(n, rate=Lambda2)
+    
+    Nu = (-2/Lambda2)*log(1-runif(n)*(1-exp(-Lambda2/2)))
+    
     #if(anyNA(Nu)){ browser() }
     
     if(t > burn)
